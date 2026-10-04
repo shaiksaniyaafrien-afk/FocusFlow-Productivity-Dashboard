@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusFlow | Smart Daily Productivity Dashboard</title>
+    <!-- Google Fonts for Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <!-- HEADER TOP BAR -->
+        <header class="app-header" role="banner">
+            <div class="brand-logo">
+                <div class="logo-icon-wrap" aria-hidden="true">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                </div>
+                <span class="brand-title">Focus<span class="gradient-text">Flow</span></span>
+            </div>
+
+            <div class="header-center">
+                <div class="status-chip date-chip" aria-label="Today's Date">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span id="live-date">Oct 3, 2026</span>
+                </div>
+                <div class="status-chip clock-chip" aria-label="Current Live Time">
+                    <span class="live-dot" aria-hidden="true"></span>
+                    <span class="live-clock" id="live-clock">00:00:00</span>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <button class="btn-icon theme-toggle" id="theme-toggle-btn" aria-label="Toggle Dark or Light Theme" title="Toggle Dark/Light Theme">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="app-sidebar" role="navigation" aria-label="Main Navigation">
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-view="dashboard-view" aria-label="Dashboard Overview View">
+                    <span class="nav-icon" aria-hidden="true">📊</span>
+                    <span class="nav-label">Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-view="tasks-view" aria-label="Daily Tasks Management View">
+                    <span class="nav-icon" aria-hidden="true">📝</span>
+                    <span class="nav-label">Daily Tasks</span>
+                </a>
+                <a href="#" class="nav-item" data-view="timer-view" aria-label="Focus Pomodoro Timer View">
+                    <span class="nav-icon" aria-hidden="true">⏱️</span>
+                    <span class="nav-label">Focus Timer</span>
+                </a>
+                <a href="#" class="nav-item" data-view="analytics-view" aria-label="Productivity Analytics View">
+                    <span class="nav-icon" aria-hidden="true">📈</span>
+                    <span class="nav-label">Analytics</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-widget">
+                <div class="widget-header">
+                    <span class="widget-title">Daily Momentum</span>
+                    <span class="fire-badge" aria-hidden="true">🔥</span>
+                </div>
+                <div class="streak-card">
+                    <div class="streak-details">
+                        <div class="streak-value" id="stat-streak">1 Days 🔥</div>
+                        <div class="streak-subtext">Active Focus Streak</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="app-main" role="main">
+
+            <!-- SECTION 1: DASHBOARD VIEW -->
+            <section id="dashboard-view" class="view-section active" aria-labelledby="dashboard-title">
+                <!-- WELCOME HERO CARD -->
+                <div class="welcome-hero">
+                    <div class="hero-text-wrap">
+                        <span class="hero-pill">⚡ Student Productivity Space</span>
+                        <h1 class="welcome-title" id="dashboard-title">Ready to build your flow today?</h1>
+                        <p class="quote-text" id="motivational-quote">“Focus is a muscle. The more you practice, the stronger it gets.”</p>
+                    </div>
+                    <div class="hero-actions">
+                        <button class="btn-primary" onclick="document.querySelector('[data-view=\'timer-view\']').click()" aria-label="Start Quick Focus Session">
+                            <span aria-hidden="true">⚡</span> Start Focus Session
+                        </button>
+                    </div>
+                </div>
+
+                <!-- METRICS GRID -->
+                <div class="stats-grid">
+                    <div class="stat-card stat-card-indigo">
+                        <div class="stat-icon" aria-hidden="true">🎯</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="stat-tasks-done">0/0</div>
+                            <div class="stat-label">Tasks Completed</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card stat-card-emerald">
+                        <div class="stat-icon" aria-hidden="true">⌛</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="stat-focus-mins">0 mins</div>
+                            <div class="stat-label">Focus Time Today</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card stat-card-amber">
+                        <div class="stat-icon" aria-hidden="true">🚀</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="stat-score">0%</div>
+                            <div class="stat-label" id="stat-score-level">Productivity Score</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DASHBOARD LOWER GRID -->
+                <div class="dashboard-grid">
+                    <div class="grid-col-main">
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h2 class="section-title"><span aria-hidden="true">📌</span> Top Priorities Today</h2>
+                                <button class="link-btn" onclick="document.querySelector('[data-view=\'tasks-view\']').click()" aria-label="View all daily tasks">View All Tasks →</button>
+                            </div>
+                            <div class="task-list" id="dashboard-task-preview">
+                                <!-- Dynamic Task Items -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-col-side">
+                        <div class="section-card goal-ring-card">
+                            <h2 class="section-title text-center"><span aria-hidden="true">📊</span> Today's Goal Progress</h2>
+                            <div class="ring-wrapper">
+                                <svg width="140" height="140" viewBox="0 0 140 140" aria-label="Daily Completion Ring">
+                                    <circle cx="70" cy="70" r="52" fill="none" stroke="var(--bg-surface-hover)" stroke-width="12"/>
+                                    <circle id="progress-ring-circle" cx="70" cy="70" r="52" fill="none" stroke="url(#emerald-gradient)" stroke-width="12" stroke-linecap="round" stroke-dasharray="326" stroke-dashoffset="326" transform="rotate(-90 70 70)" style="transition: stroke-dashoffset 0.6s ease;"/>
+                                    <defs>
+                                        <linearGradient id="emerald-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#10b981" />
+                                            <stop offset="100%" stop-color="#34d399" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                                <div id="progress-ring-percent" class="ring-center-text">0%</div>
+                            </div>
+                            <p class="ring-subtext">Complete daily tasks to maximize your productivity score!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: DAILY TASKS VIEW -->
+            <section id="tasks-view" class="view-section" aria-labelledby="tasks-title">
+
+                <!-- DAILY PRODUCTIVITY SUMMARY CARD -->
+                <div class="section-card summary-card">
+                    <div class="summary-header">
+                        <h2 class="section-title" id="tasks-title"><span aria-hidden="true">📊</span> Daily Productivity Summary</h2>
+                        <span id="summary-completion-percent" class="summary-percent-badge">0% Completed</span>
+                    </div>
+
+                    <div class="summary-progress-bar-bg" aria-label="Productivity completion progress bar">
+                        <div id="summary-progress-bar-fill" class="summary-progress-bar-fill" style="width: 0%;"></div>
+                    </div>
+
+                    <div class="summary-stats-grid">
+                        <div class="summary-stat">
+                            <span class="summary-stat-label">Total Tasks</span>
+                            <span id="summary-total-tasks" class="summary-stat-value">0</span>
+                        </div>
+                        <div class="summary-stat">
+                            <span class="summary-stat-label">Completed</span>
+                            <span id="summary-completed-tasks" class="summary-stat-value text-emerald">0</span>
+                        </div>
+                        <div class="summary-stat">
+                            <span class="summary-stat-label">Remaining</span>
+                            <span id="summary-remaining-tasks" class="summary-stat-value text-amber">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ADD TASK FORM CARD -->
+                <div class="section-card add-task-card-wrap">
+                    <h2 class="section-title"><span aria-hidden="true">📝</span> Create New Task</h2>
+                    <form id="add-task-form" class="add-task-form">
+                        <div class="task-form-row">
+                            <label for="task-title-input" class="sr-only">Task Title</label>
+                            <input type="text" id="task-title-input" class="form-control title-input" placeholder="Task title (e.g. Complete math assignment)" required>
+                        </div>
+                        <div class="task-form-row flex-row">
+                            <div class="form-group-flex">
+                                <label for="task-category-input" class="sr-only">Category</label>
+                                <select id="task-category-input" class="form-control" aria-label="Task Category">
+                                    <option value="General">🏷️ Optional Category (General)</option>
+                                    <option value="Work">💼 Work</option>
+                                    <option value="Personal">🏠 Personal</option>
+                                    <option value="Study" selected>📚 Study</option>
+                                    <option value="Health">🌿 Health</option>
+                                </select>
+                            </div>
+                            <div class="form-group-flex">
+                                <label for="task-priority-input" class="sr-only">Priority Level</label>
+                                <select id="task-priority-input" class="form-control" aria-label="Task Priority">
+                                    <option value="high">🔴 High Priority</option>
+                                    <option value="medium" selected>🟡 Medium Priority</option>
+                                    <option value="low">🟢 Low Priority</option>
+                                </select>
+                            </div>
+                            <div class="input-with-label">
+                                <span class="input-prefix" aria-hidden="true">🍅</span>
+                                <label for="task-est-input" class="sr-only">Estimated Pomodoro Sessions</label>
+                                <input type="number" id="task-est-input" class="form-control est-input" min="1" max="10" value="1" title="Estimated Pomodoro Sessions" aria-label="Estimated Pomodoros">
+                            </div>
+                        </div>
+                        <div class="task-form-row flex-row">
+                            <label for="task-notes-input" class="sr-only">Task Notes</label>
+                            <input type="text" id="task-notes-input" class="form-control notes-input" placeholder="Add optional details or sub-notes...">
+                            <button type="submit" class="btn-primary add-btn" aria-label="Add new task">
+                                <span aria-hidden="true">➕</span> Add Task
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- TASK LIST & FILTERING CARD -->
+                <div class="section-card">
+                    <div class="task-filters-bar">
+                        <!-- STATUS FILTERS -->
+                        <div class="filter-group">
+                            <span class="filter-group-label">Status:</span>
+                            <div class="filter-pills" id="status-filter-pills" role="group" aria-label="Filter tasks by status">
+                                <button class="filter-pill active" data-status="All">All</button>
+                                <button class="filter-pill" data-status="Active">Active</button>
+                                <button class="filter-pill" data-status="Completed">Completed</button>
+                            </div>
+                        </div>
+
+                        <!-- CATEGORY FILTERS -->
+                        <div class="filter-group">
+                            <span class="filter-group-label">Category:</span>
+                            <div class="filter-pills" id="category-filter-pills" role="group" aria-label="Filter tasks by category">
+                                <button class="filter-pill active" data-category="All">All</button>
+                                <button class="filter-pill" data-category="Study">Study</button>
+                                <button class="filter-pill" data-category="Work">Work</button>
+                                <button class="filter-pill" data-category="Personal">Personal</button>
+                                <button class="filter-pill" data-category="Health">Health</button>
+                                <button class="filter-pill" data-category="General">General</button>
+                            </div>
+                        </div>
+
+                        <!-- PRIORITY & SEARCH -->
+                        <div class="filter-group flex-end">
+                            <label for="priority-filter-select" class="sr-only">Filter by priority</label>
+                            <select id="priority-filter-select" class="form-control filter-select" aria-label="Filter by priority">
+                                <option value="All">⚡ All Priorities</option>
+                                <option value="high">🔴 High Priority</option>
+                                <option value="medium">🟡 Medium Priority</option>
+                                <option value="low">🟢 Low Priority</option>
+                            </select>
+                            <div class="search-wrap">
+                                <span class="search-icon" aria-hidden="true">🔍</span>
+                                <label for="task-search" class="sr-only">Search tasks</label>
+                                <input type="text" id="task-search" class="form-control search-input" placeholder="Search tasks..." aria-label="Search tasks input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-list-header-row">
+                        <h3 class="subsection-title" id="active-tasks-heading"><span aria-hidden="true">⏳</span> Active Tasks</h3>
+                    </div>
+                    <div class="task-list" id="active-tasks-list">
+                        <!-- Dynamic Active Tasks -->
+                    </div>
+
+                    <div class="completed-header-wrap" id="completed-section-wrap">
+                        <h3 class="subsection-title text-muted"><span aria-hidden="true">✅</span> Completed Tasks</h3>
+                        <button id="clear-completed-btn" class="btn-secondary-sm" aria-label="Clear all completed tasks">Clear Completed</button>
+                    </div>
+                    <div class="task-list" id="completed-tasks-list">
+                        <!-- Dynamic Completed Tasks -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: FOCUS TIMER VIEW -->
+            <section id="timer-view" class="view-section" aria-labelledby="timer-title">
+                <div class="timer-container section-card">
+                    <h2 class="sr-only" id="timer-title">Focus Pomodoro Timer</h2>
+                    <div class="timer-mode-switcher" role="tablist" aria-label="Timer Session Modes">
+                        <button class="timer-mode-btn active" data-mode="pomodoro" role="tab" aria-selected="true">Pomodoro (25m)</button>
+                        <button class="timer-mode-btn" data-mode="shortBreak" role="tab" aria-selected="false">Short Break (5m)</button>
+                        <button class="timer-mode-btn" data-mode="longBreak" role="tab" aria-selected="false">Long Break (15m)</button>
+                    </div>
+
+                    <div class="timer-active-task-badge" id="timer-active-task">
+                        Focusing on: Deep Work Session
+                    </div>
+
+                    <div class="timer-ring-wrapper">
+                        <svg class="timer-svg" width="300" height="300" viewBox="0 0 300 300" aria-label="Timer countdown progress ring">
+                            <circle class="timer-ring-bg" cx="150" cy="150" r="130" fill="none" stroke-width="12"></circle>
+                            <circle id="timer-ring-circle" class="timer-ring-circle" cx="150" cy="150" r="130" fill="none" stroke-width="12" stroke-linecap="round"></circle>
+                        </svg>
+                        <div class="timer-time-display" id="timer-display" aria-live="polite">25:00</div>
+                    </div>
+
+                    <div class="timer-controls">
+                        <button id="timer-start-btn" class="btn-primary btn-large timer-main-btn" aria-label="Start or pause focus timer">
+                            <span aria-hidden="true">▶️ Start</span>
+                        </button>
+                        <button id="timer-reset-btn" class="btn-icon timer-icon-btn" aria-label="Reset Timer to default duration" title="Reset Timer">
+                            🔄
+                        </button>
+                        <button id="timer-skip-btn" class="btn-icon timer-icon-btn" aria-label="Skip current timer session" title="Skip Session">
+                            ⏭️
+                        </button>
+                    </div>
+
+                    <!-- AMBIENT SOUND GENERATOR -->
+                    <div class="soundscape-panel">
+                        <div class="soundscape-left">
+                            <span class="soundscape-icon" aria-hidden="true">🎧</span>
+                            <div class="soundscape-info">
+                                <label for="ambient-sound-select" class="soundscape-label">Ambient Soundscape</label>
+                                <select id="ambient-sound-select" class="form-control ambient-select" aria-label="Select ambient soundscape">
+                                    <option value="none">Off</option>
+                                    <option value="rain">🌧️ Soft Rain</option>
+                                    <option value="waves">🌊 Gentle Waves</option>
+                                    <option value="white">📻 White Noise</option>
+                                    <option value="focus">🧘 432Hz Zen Tone</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="soundscape-right">
+                            <span class="vol-icon" aria-hidden="true">🔊</span>
+                            <label for="ambient-volume" class="sr-only">Ambient Volume</label>
+                            <input type="range" id="ambient-volume" class="vol-slider" min="0" max="1" step="0.05" value="0.3" aria-label="Ambient volume control">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: ANALYTICS VIEW -->
+            <section id="analytics-view" class="view-section" aria-labelledby="analytics-title">
+                <div class="section-card">
+                    <h2 class="section-title" id="analytics-title"><span aria-hidden="true">📈</span> Weekly Focus Analytics</h2>
+                    <p class="analytics-subtitle">Track your focus minutes logged across each day of the week.</p>
+
+                    <div class="weekly-chart" id="weekly-chart-bars" aria-label="Weekly activity bar chart">
+                        <!-- Dynamic Chart Bars -->
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- TASK EDIT MODAL -->
+    <div id="edit-task-modal" class="modal-backdrop" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">✏️ Edit Task</h3>
+                <button class="btn-icon modal-close-btn" id="modal-close-btn" aria-label="Close edit modal">✕</button>
+            </div>
+            <form id="edit-task-form" class="modal-form">
+                <input type="hidden" id="edit-task-id">
+                <div class="task-form-row">
+                    <label for="edit-task-title" class="sr-only">Task Title</label>
+                    <input type="text" id="edit-task-title" class="form-control" required placeholder="Task Title">
+                </div>
+                <div class="task-form-row flex-row">
+                    <div class="form-group-flex">
+                        <label for="edit-task-category" class="sr-only">Category</label>
+                        <select id="edit-task-category" class="form-control">
+                            <option value="General">🏷️ General</option>
+                            <option value="Work">💼 Work</option>
+                            <option value="Personal">🏠 Personal</option>
+                            <option value="Study">📚 Study</option>
+                            <option value="Health">🌿 Health</option>
+                        </select>
+                    </div>
+                    <div class="form-group-flex">
+                        <label for="edit-task-priority" class="sr-only">Priority Level</label>
+                        <select id="edit-task-priority" class="form-control">
+                            <option value="high">🔴 High Priority</option>
+                            <option value="medium">🟡 Medium Priority</option>
+                            <option value="low">🟢 Low Priority</option>
+                        </select>
+                    </div>
+                    <div class="input-with-label">
+                        <span class="input-prefix" aria-hidden="true">🍅</span>
+                        <label for="edit-task-est" class="sr-only">Estimated Pomodoros</label>
+                        <input type="number" id="edit-task-est" class="form-control est-input" min="1" max="10" value="1">
+                    </div>
+                </div>
+                <div class="task-form-row">
+                    <label for="edit-task-notes" class="sr-only">Task Notes</label>
+                    <input type="text" id="edit-task-notes" class="form-control" placeholder="Optional notes...">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary-sm" id="modal-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JS SCRIPTS -->
+    <script src="js/audio.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
